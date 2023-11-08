@@ -20,4 +20,5 @@ $app->get('/clientes', function (ServerRequestInterface $request, ResponseInterf
     return $response->withHeader('Content-type', 'application/json');
 });
 
+
 $app->run();
