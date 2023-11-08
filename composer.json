@@ -1,0 +1,19 @@
+{
+    "name": "alexmorgado/phpdocker",
+    "autoload": {
+        "psr-4": {
+            "Unialfa\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "alexmpereira",
+            "email": "alexmpereiradev@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^4.12",
+        "nyholm/psr7-server": "^1.1",
+        "nyholm/psr7": "^1.8"
+    }
+}
