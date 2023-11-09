@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+</head>
+
+<body>
+    <h1>Lista de Clientes</h1>
+    <table id="clientes-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <!-- Adicione mais colunas conforme necessário -->
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2>Cadastrar Novo Cliente</h2>
+    <form id="cliente-form">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+        <!-- Adicione mais campos do formulário conforme necessário -->
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <script>
+        // Função para carregar a lista de clientes na tabela
+        function carregarClientes() {
+            fetch('http://localhost:8098/api/clientes')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const tabela = document.getElementById('clientes-table').getElementsByTagName('tbody')[0];
+                    tabela.innerHTML = '';
+                    data.forEach(cliente => {
+                        const row = tabela.insertRow();
+                        row.insertCell().textContent = cliente.id;
+                        row.insertCell().textContent = cliente.nome;
+                        // Adicione mais células conforme necessário
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar clientes:', error));
+        }
+
+        // Função para cadastrar um novo cliente
+        function cadastrarCliente(event) {
+            event.preventDefault();
+            const nome = document.getElementById('nome').value;
+            // Obtenha os valores dos outros campos do formulário conforme necessário
+
+            // Enviar os dados para o endpoint de cadastro (por exemplo, usando fetch e método POST)
+            fetch('http://localhost:8098/api/clientes', {
+                method: 'POST',
+                body: JSON.stringify({ nome: nome }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Após o cadastro bem-sucedido, recarrega a lista de clientes
+                carregarClientes();
+                // Limpa o formulário
+                document.getElementById('cliente-form').reset();
+            })
+            .catch(error => console.error('Erro ao cadastrar cliente:', error));
+        }
+
+        // Adicionar um listener para o evento de submit do formulário
+        document.getElementById('cliente-form').addEventListener('submit', cadastrarCliente);
+
+        // Carregar a lista de clientes ao carregar a página
+        carregarClientes();
+    </script>
+</body>
+
+</html>
